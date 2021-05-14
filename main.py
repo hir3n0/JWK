@@ -44,7 +44,6 @@ class RV(RecycleView):
                 actual.append(x)
         self.data = [{'text': str(j)} for j in actual]
 
-
 class TestApp(App):
     def build(self):
         return RV()
