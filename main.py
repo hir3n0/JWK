@@ -31,7 +31,6 @@ class MyGridLayout(GridLayout):
         super(MyGridLayout, self).__init__(**kwargs)
         self.logowanie()
 
-
     def logowanie(self):
         self.cols = 1
 
