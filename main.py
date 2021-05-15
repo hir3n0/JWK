@@ -11,6 +11,8 @@ from kivy.properties import StringProperty, ObjectProperty
 from py_librus_api import Librus
 from datetime import date
 
+import os
+
 import time
 
 global tajne_akta
@@ -34,15 +36,16 @@ class MyGridLayout(GridLayout):
     def logowanie(self):
         self.cols = 1
 
+        self.row_force_default = True
+        self.row_default_height = 80
+        self.col_force_default = False
+        self.col_default_width = 400
+
         self.top_grid = GridLayout()
         self.top_grid.cols = 2
 
         self.second_grid = GridLayout()
         self.second_grid.cols = 1
-
-        self.error_grid = GridLayout()
-        self.error_grid.cols = 1
-
         # dodajemy widgety
         # text box z loginem
         self.top_grid.add_widget(Label(text="Login: "))
@@ -55,7 +58,11 @@ class MyGridLayout(GridLayout):
 
         self.add_widget(self.top_grid)
         # przycisk
-        self.submit = Button(text="zaloguj", font_size=32)
+        self.submit = Button(text="zaloguj",
+            font_size=32,
+            size_hint_y = None,
+            height = 40,
+            )
         self.submit.bind(on_press=self.press)
         self.add_widget(self.submit)
 
@@ -67,8 +74,8 @@ class MyGridLayout(GridLayout):
 
         while not librus.logged_in:
             if not librus.login(login, password):
-                print("Log in failed! Check your username and/or password!")
-                time.sleep(2)
+                os.system("python main.py")
+                exit()
             else:
                 print("Logged in successfully!")
 
