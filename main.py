@@ -72,12 +72,10 @@ class MyGridLayout(GridLayout):
         login = self.login.text
         password = self.haslo.text
 
-        while not librus.logged_in:
+        if not librus.logged_in:
             if not librus.login(login, password):
                 os.system("python main.py")
                 exit()
-            else:
-                print("Logged in successfully!")
 
         tajne_akta = librus.get_teacher_free_days()
 
