@@ -1,9 +1,6 @@
 import kivy
 from kivy.app import App
-from kivy.uix.label import Label
-from kivy.uix.gridlayout import GridLayout
-from kivy.uix.textinput import TextInput
-from kivy.uix.button import Button
+from kivy.uix.widget import Widget
 from kivy.lang import Builder
 from kivy.uix.recycleview import RecycleView
 from kivy.properties import StringProperty, ObjectProperty
@@ -28,10 +25,9 @@ Builder.load_string('''
         orientation: 'vertical'
 ''')
 
-class MyGridLayout(GridLayout):
+'''class MyGridLayout(GridLayout):
     def __init__(self, **kwargs):
         super(MyGridLayout, self).__init__(**kwargs)
-        self.logowanie()
 
     def logowanie(self):
         self.cols = 1
@@ -94,7 +90,71 @@ class MyGridLayout(GridLayout):
         for i in self.data:
             self.second_grid.add_widget(Label(text=str(i['text']), font_size=10))
 
+        self.add_widget(self.second_grid)'''
+
+librus = Librus()
+
+Builder.load_file('gui.kv')
+
+class MyLibrus():
+    librus = Librus()
+    def __init__(self, login, password, nr):
+        self.login = login
+        self.password = password
+        self.nr = nr
+
+    def czyZalogowano(self):
+        if not librus.logged_in:
+            if not librus.login(self.login, self.password):
+                print("Nie zalogowano")
+                os.system("python main.py")
+                exit()
+            else:
+                print("Zalogowano")
+
+    def nieObecnosci(self):
+        #   To jest do zmiany by pokazywało w aplikacji! I narazie nie działa.
+        tajne_akta = librus.get_teacher_free_days()
+        print("Zalogowano i działa")
+
+        def ToDate(text):
+            text = text.split('-')
+            return date(int(text[0]), int(text[1]), int(text[2]))
+
+        actual = []
+        print("Zalogowano i działa 2")
+        for x in tajne_akta:
+            if date.today() <= ToDate(x["DateTo"]):
+                actual.append(x)
+
+        self.data = [{'text': str(j)} for j in actual]
+
+        print("Zalogowano i działa 3")
+
+        for i in self.data:
+            self.second_grid.add_widget(Label(text=str(i['text']), font_size=10))
+
         self.add_widget(self.second_grid)
+
+        print("Zalogowano i działa 4")
+
+class MyGridLayout(Widget):
+
+    login = ObjectProperty(None)
+    password = ObjectProperty(None)
+    nr = ObjectProperty(None)
+
+    def press(self):
+        librus = Librus()
+
+        login = self.login.text
+        password = self.password.text
+        nr = 0
+
+        lib = MyLibrus(login, password, nr)
+
+        lib.czyZalogowano()
+        lib.nieObecnosci()
 
 
 '''class RV(RecycleView):
@@ -109,9 +169,10 @@ class MyGridLayout(GridLayout):
                 actual.append(x)
         self.data = [{'text': str(j)} for j in actual]'''
 
-class TestApp(App):
+
+class MyApp(App):
     def build(self):
         return MyGridLayout()
 
 if __name__ == '__main__':
-    TestApp().run()
+    MyApp().run()
