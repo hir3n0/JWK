@@ -15,20 +15,25 @@
             TextInput:
                 id: login
                 multiline:False
+                font_size: 32
 
             Label:
                 text: "Password"
             TextInput:
                 id: password
                 multiline:False
+                password: True
+                font_size: 32
 
             Label:
                 text: "Numerek"
             TextInput:
                 id: sz_nr
                 multiline:False
+                font_size: 32
 
         Button:
             text: "Submit"
             font_size: 64
             on_press: root.press()
+            pos_hint
