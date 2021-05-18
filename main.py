@@ -5,6 +5,7 @@ from kivy.lang import Builder
 from kivy.uix.recycleview import RecycleView
 from kivy.properties import StringProperty, ObjectProperty
 from kivy.core.window import Window
+from kivy.uix.tabbedpanel import  TabbedPanel
 
 from py_librus_api import Librus
 from datetime import date
@@ -16,7 +17,7 @@ import time
 
 librus = Librus()
 
-Builder.load_file('gui2.kv')
+Builder.load_file('gui_tab.kv')
 
 Window.clearcolor = (30/255,30/255,30/255,0)
 
@@ -29,9 +30,9 @@ class MyLibrus():
     def czyZalogowano(self):
         if not librus.logged_in:
             if not librus.login(self.login, self.password):
-                print("Nie zalogowano")
-                os.system("python main.py")
-                exit()
+                return False
+            else:
+                return True
 
     def nieObecnosci(self):
         tajne_akta = librus.get_teacher_free_days()
@@ -48,6 +49,7 @@ class MyLibrus():
         data = [{'text': str(j)} for j in actual]
 
         nieobecnosc = ''
+
         for i in data:
             s = eval(i['text'])
             if 'Teacher' in s:
@@ -60,7 +62,7 @@ class MyLibrus():
 
         return nieobecnosc
 
-class MyGridLayout(Widget):
+class MyGridLayout(TabbedPanel):
 
     login = ObjectProperty(None)
     password = ObjectProperty(None)
@@ -73,13 +75,16 @@ class MyGridLayout(Widget):
 
         lib = MyLibrus(login, password, nr)
 
-        lib.czyZalogowano()
-        self.ids.nie.text = lib.nieObecnosci()
+        if lib.czyZalogowano():
+            self.ids.zal.text = 'Zalogowano'
+            self.ids.nie.text, self.ids.nie.halign = lib.nieObecnosci(), 'left'
+        else:
+            self.ids.zal.text = 'Nie zalogowano'
 
 
 class MyApp(App):
     def build(self):
-        Window.size = (1080 / 2.5, 2244 / 2.5)
+        Window.size = (1080, 2244)
         return MyGridLayout()
 
 if __name__ == '__main__':
