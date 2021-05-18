@@ -1,0 +1,112 @@
+<MyGridLayout>
+
+    login:login
+    password:password
+    sz_nr:sz_nr
+
+    do_default_tab: False
+
+    tab_width: root.width/2
+    tab_height: root.height / 20
+
+    TabbedPanelItem:
+        text: "Logowanie"
+        BoxLayout:
+            orientation: "vertical"
+            size: root.width, root.height
+            BoxLayout:
+                orientation: "horizontal"
+                size: root.width, root.height
+
+                BoxLayout:
+                    orientation: "vertical"
+                    padding: 50
+                    spacing: 20
+                    BoxLayout:
+                        orientation: "horizontal"
+                        pos_hint: {'center_x': 0.5}
+                        size_hint: ( None , None )
+                        width: root.width
+                        height: 50
+
+                        Label:
+                            text: "Login"
+
+                        TextInput:
+                            id: login
+                            multiline:False
+                            font_size: 32
+                            foreground_color: (0.3, 0.4, 0.5, 1)
+                            backgound_normal: ''
+
+
+                    BoxLayout:
+
+                        orientation: "horizontal"
+                        pos_hint: {'center_x': 0.5}
+                        size_hint: ( None , None )
+                        width: root.width
+                        height: 50
+
+                        Label:
+                            text: "Hasło"
+                        TextInput:
+                            id: password
+                            multiline:False
+                            password: True
+                            font_size: 32
+
+                    BoxLayout:
+
+                        orientation: "horizontal"
+                        pos_hint: {'center_x': 0.5}
+                        size_hint: ( None , None )
+                        width: root.width
+                        height: 50
+
+                        Label:
+                            text: "Numerek"
+                        TextInput:
+                            id: sz_nr
+                            multiline:False
+                            font_size: 32
+
+
+            RoundedButton:
+                text: "Submit"
+                font_size: 32
+                on_press: root.press()
+                pos_hint: {'center_x': 0.5}
+                size_hint: ( 0.5, 0.1 )
+
+            Label:
+                id: zal
+                font_size: 50
+
+    TabbedPanelItem:
+        text: "Nieobecności"
+        BoxLayout:
+            orientation: "vertical"
+            padding: 50
+            Label:
+                id: nie
+                text: "Nie ma tu nic\nSzukaj Borka gdzieś indziej"
+                halign: 'center'
+                font_size: str(slider.value)
+            Slider:
+                size_hint: ( 1, 0.1 )
+                id: slider
+                min: 15
+                max: 60
+                step: 5
+                orientation: 'horizontal'
+<RoundedButton@Button>
+    background_color: (0,0,0,0)
+    background_normal: ''
+    canvas.before:
+        Color:
+            rgba: (80/255,80/255,80/255, 1)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [10]
