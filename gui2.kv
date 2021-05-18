@@ -21,7 +21,7 @@
                     pos_hint: {'center_x': 0.5}
                     size_hint: ( None , None )
                     width: root.width
-                    height: 50
+                    height: root.height / 8
                     orientation: "horizontal"
 
                     Label:
@@ -83,7 +83,7 @@
         Slider:
             id: slider
             min: 0
-            max: 100
+            max: 40
             step: 1
             orientation: 'horizontal'
 
