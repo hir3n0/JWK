@@ -78,7 +78,14 @@
 
         Label:
             id: nie
-            font_size: 10
+            font_size: str(slider.value)
+
+        Slider:
+            id: slider
+            min: 0
+            max: 100
+            step: 1
+            orientation: 'horizontal'
 
 <RoundedButton@Button>
     background_color: (0,0,0,0)
