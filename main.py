@@ -34,7 +34,6 @@ class MyLibrus():
                 exit()
 
     def nieObecnosci(self):
-        #   To jest do zmiany by pokazywało w aplikacji! I narazie nie działa.
         tajne_akta = librus.get_teacher_free_days()
 
         def ToDate(text):
